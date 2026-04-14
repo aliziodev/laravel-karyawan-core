@@ -120,6 +120,29 @@ it('GET /api/karyawan/employees/export supports filters by status and join date'
     expect($sheet->getCell('B3')->getValue())->toBeNull();
 });
 
+it('GET /api/karyawan/employees/export supports filters by created at date range', function () {
+    Employee::factory()->create([
+        'full_name' => 'Created At Cocok',
+        'created_at' => '2026-04-10 09:00:00',
+    ]);
+
+    Employee::factory()->create([
+        'full_name' => 'Created At Tidak Cocok',
+        'created_at' => '2024-04-10 09:00:00',
+    ]);
+
+    $response = $this->get('/api/karyawan/employees/export?created_at_from=2026-01-01&created_at_to=2026-12-31');
+
+    $response->assertOk();
+    $response->assertDownload();
+
+    $file = $response->baseResponse->getFile()->getPathname();
+    $sheet = IOFactory::load($file)->getActiveSheet();
+
+    expect($sheet->getCell('B2')->getValue())->toBe('Created At Cocok');
+    expect($sheet->getCell('B3')->getValue())->toBeNull();
+});
+
 it('GET /api/karyawan/employees/export returns english validation message for invalid status', function () {
     app()->setLocale('en');
 
