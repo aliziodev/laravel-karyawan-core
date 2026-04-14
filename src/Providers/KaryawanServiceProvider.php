@@ -146,5 +146,18 @@ class KaryawanServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Http/Controllers/Web/Blade' => app_path('Http/Controllers/Karyawan/Web/Blade'),
         ], 'karyawan-controllers-web-blade');
+
+        // Routes (untuk aplikasi host)
+        $this->publishes([
+            __DIR__.'/../../routes/api.php' => base_path('routes/karyawan/api.php'),
+        ], 'karyawan-routes-api');
+
+        $this->publishes([
+            __DIR__.'/../../routes/web-inertia.php' => base_path('routes/karyawan/web-inertia.php'),
+        ], 'karyawan-routes-web-inertia');
+
+        $this->publishes([
+            __DIR__.'/../../routes/web-blade.php' => base_path('routes/karyawan/web-blade.php'),
+        ], 'karyawan-routes-web-blade');
     }
 }
