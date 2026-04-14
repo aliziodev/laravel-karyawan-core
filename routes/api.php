@@ -8,6 +8,7 @@ use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\Employee\EmployeeEmergenc
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\Employee\EmployeeHistoryController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\Employee\EmployeeStatusController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\Employee\EmployeeUserController;
+use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\Employee\ExportEmployeesController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\EmployeeController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Api\PositionController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,9 @@ Route::group([
         ->names('karyawan.api.positions');
 
     // --- Employee CRUD ---
+    Route::get('employees/export', ExportEmployeesController::class)
+        ->name('karyawan.api.employees.export');
+
     Route::apiResource('employees', EmployeeController::class)
         ->names('karyawan.api.employees');
 

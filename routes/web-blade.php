@@ -5,6 +5,7 @@ use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\CompanyController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\DepartmentController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\Employee\EmployeeDocumentController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\Employee\EmployeeEmergencyContactController;
+use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\Employee\ExportEmployeesController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\Employee\EmployeeHistoryController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\Employee\EmployeeStatusController;
 use Aliziodev\LaravelKaryawanCore\Http\Controllers\Web\Blade\Employee\EmployeeUserController;
@@ -32,6 +33,9 @@ Route::group([
         ->names('positions');
 
     // --- Employee CRUD ---
+    Route::get('employees/export', ExportEmployeesController::class)
+        ->name('employees.export');
+
     Route::resource('employees', EmployeeController::class)
         ->names('employees');
 
