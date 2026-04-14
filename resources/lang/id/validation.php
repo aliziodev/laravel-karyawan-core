@@ -95,6 +95,8 @@ return [
             'join_date_to' => 'tanggal masuk sampai',
             'exit_date_from' => 'tanggal keluar dari',
             'exit_date_to' => 'tanggal keluar sampai',
+            'created_at_from' => 'tanggal dibuat dari',
+            'created_at_to' => 'tanggal dibuat sampai',
             'sort_by' => 'urutan kolom',
             'sort_direction' => 'arah urutan',
         ],

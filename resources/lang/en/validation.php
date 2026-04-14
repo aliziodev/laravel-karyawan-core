@@ -95,6 +95,8 @@ return [
             'join_date_to' => 'join date to',
             'exit_date_from' => 'exit date from',
             'exit_date_to' => 'exit date to',
+            'created_at_from' => 'created at from',
+            'created_at_to' => 'created at to',
             'sort_by' => 'sort by',
             'sort_direction' => 'sort direction',
         ],
