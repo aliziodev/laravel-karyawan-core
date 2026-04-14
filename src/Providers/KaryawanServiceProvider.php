@@ -37,6 +37,7 @@ class KaryawanServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'karyawan');
 
         $this->registerPolicies();
         $this->registerRoutes();
@@ -125,6 +126,11 @@ class KaryawanServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../database/factories' => database_path('factories'),
         ], 'karyawan-factories');
+
+        // Translations
+        $this->publishes([
+            __DIR__.'/../../resources/lang' => lang_path('vendor/karyawan'),
+        ], 'karyawan-lang');
 
         // API Controllers
         $this->publishes([
