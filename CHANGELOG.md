@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/aliziodev/laravel-karyawan-core/compare/v1.2.0...v1.2.1) (2026-04-14)
+
+### Bug Fixes
+
+* update employee_code generation in EmployeeFactory for consistency and uniqueness ([99653f4](https://github.com/aliziodev/laravel-karyawan-core/commit/99653f4d95522646c18ef0f6824b7f46d068eae0))
+
 ## [1.2.0](https://github.com/aliziodev/laravel-karyawan-core/compare/v1.1.0...v1.2.0) (2026-04-14)
 
 ### Features
