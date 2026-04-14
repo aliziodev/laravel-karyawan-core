@@ -30,6 +30,8 @@ class BuildEmployeeExportQueryAction
             ->when(isset($filters['join_date_to']), fn (Builder $q) => $q->whereDate('join_date', '<=', (string) $filters['join_date_to']))
             ->when(isset($filters['exit_date_from']), fn (Builder $q) => $q->whereDate('exit_date', '>=', (string) $filters['exit_date_from']))
             ->when(isset($filters['exit_date_to']), fn (Builder $q) => $q->whereDate('exit_date', '<=', (string) $filters['exit_date_to']))
+            ->when(isset($filters['created_at_from']), fn (Builder $q) => $q->whereDate('created_at', '>=', (string) $filters['created_at_from']))
+            ->when(isset($filters['created_at_to']), fn (Builder $q) => $q->whereDate('created_at', '<=', (string) $filters['created_at_to']))
             ->orderBy($sortBy, $sortDirection);
     }
 }

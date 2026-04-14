@@ -31,6 +31,8 @@ abstract class BaseExportEmployeesRequest extends FormRequest
             'join_date_to' => ['nullable', 'date', 'after_or_equal:join_date_from'],
             'exit_date_from' => ['nullable', 'date'],
             'exit_date_to' => ['nullable', 'date', 'after_or_equal:exit_date_from'],
+            'created_at_from' => ['nullable', 'date'],
+            'created_at_to' => ['nullable', 'date', 'after_or_equal:created_at_from'],
             'sort_by' => ['nullable', Rule::in(['employee_code', 'full_name', 'join_date', 'active_status', 'created_at'])],
             'sort_direction' => ['nullable', Rule::in(['asc', 'desc'])],
         ];
@@ -63,6 +65,10 @@ abstract class BaseExportEmployeesRequest extends FormRequest
             'exit_date_to.date' => __('karyawan::validation.export.date'),
             'exit_date_to.after_or_equal' => __('karyawan::validation.export.after_or_equal'),
 
+            'created_at_from.date' => __('karyawan::validation.export.date'),
+            'created_at_to.date' => __('karyawan::validation.export.date'),
+            'created_at_to.after_or_equal' => __('karyawan::validation.export.after_or_equal'),
+
             'sort_by.in' => __('karyawan::validation.export.in'),
             'sort_direction.in' => __('karyawan::validation.export.in'),
         ];
@@ -84,6 +90,8 @@ abstract class BaseExportEmployeesRequest extends FormRequest
             'join_date_to' => __('karyawan::validation.export.attributes.join_date_to'),
             'exit_date_from' => __('karyawan::validation.export.attributes.exit_date_from'),
             'exit_date_to' => __('karyawan::validation.export.attributes.exit_date_to'),
+            'created_at_from' => __('karyawan::validation.export.attributes.created_at_from'),
+            'created_at_to' => __('karyawan::validation.export.attributes.created_at_to'),
             'sort_by' => __('karyawan::validation.export.attributes.sort_by'),
             'sort_direction' => __('karyawan::validation.export.attributes.sort_direction'),
         ];
