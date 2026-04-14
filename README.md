@@ -2,7 +2,7 @@
 
 **Fondasi data karyawan yang dapat digunakan ulang untuk aplikasi bisnis Laravel Indonesia.**
 
-Package Laravel siap produksi yang menyediakan fondasi lengkap manajemen data karyawan — mulai dari struktur organisasi, profil karyawan, manajemen dokumen, kontak darurat, riwayat perubahan, tautan akun pengguna, hingga REST API penuh — semuanya dapat dikonfigurasi dan dipublikasikan ke aplikasi Anda.
+Package Laravel siap produksi yang menyediakan fondasi lengkap manajemen data karyawan — mulai dari struktur organisasi, profil karyawan, manajemen dokumen, kontak darurat, riwayat perubahan, tautan akun pengguna, REST API penuh, hingga export data karyawan ke XLSX — semuanya dapat dikonfigurasi dan dipublikasikan ke aplikasi Anda.
 
 [![PHP Version](https://img.shields.io/badge/php-%5E8.2-blue)](https://www.php.net/)
 [![Laravel](https://img.shields.io/badge/laravel-%5E11.0%7C%5E12.0-red)](https://laravel.com)
@@ -34,6 +34,7 @@ Package Laravel siap produksi yang menyediakan fondasi lengkap manajemen data ka
 - [REST API](#rest-api)
   - [Mengaktifkan Route API](#mengaktifkan-route-api)
   - [Daftar Endpoint API](#daftar-endpoint-api)
+    - [Export Karyawan (XLSX)](#export-karyawan-xlsx)
   - [Format Respons API](#format-respons-api)
 - [Antarmuka Web](#antarmuka-web)
   - [Inertia.js](#inertiajs)
@@ -66,6 +67,7 @@ Package Laravel siap produksi yang menyediakan fondasi lengkap manajemen data ka
 - **Log Riwayat** — Jejak audit otomatis untuk setiap perubahan status dan tautan akun
 - **Tautan Akun Pengguna** — Hubungkan/putuskan model User mana pun ke karyawan, aman dari concurrency
 - **REST API** — JSON API lengkap dengan dukungan Laravel Sanctum, respons terpaginasi, dan JSON Resources
+- **Export XLSX Karyawan** — Export data karyawan ke file `.xlsx` dari endpoint API maupun route web (Inertia/Blade) dengan filter yang konsisten
 - **Controller Web** — Tersedia dalam versi **Inertia.js** maupun **Blade**
 - **Events** — Sistem event lengkap untuk setiap siklus hidup karyawan
 - **Policies** — Otorisasi berbasis Policy yang dapat diperluas untuk semua model
@@ -687,9 +689,28 @@ Semua endpoint menggunakan prefix yang dikonfigurasi (default: `api/karyawan`).
 |---|---|---|
 | `GET` | `/employees` | Daftar terpaginasi. Mendukung `?search=`, `?company_id=`, `?department_id=`, `?active_only=1` |
 | `POST` | `/employees` | Buat karyawan baru |
+| `GET` | `/employees/export` | Export data karyawan ke file XLSX. Mendukung filter export |
 | `GET` | `/employees/{id}` | Detail karyawan beserta semua relasinya |
 | `PUT` | `/employees/{id}` | Perbarui karyawan |
 | `DELETE` | `/employees/{id}` | Soft-delete karyawan |
+
+#### Export Karyawan (XLSX)
+
+Endpoint export:
+
+- `GET /employees/export`
+
+Parameter filter yang didukung:
+
+- `search`
+- `company_id`, `branch_id`, `department_id`, `position_id`
+- `active_status`, `employment_type`
+- `with_login`, `without_login`
+- `join_date_from`, `join_date_to`
+- `exit_date_from`, `exit_date_to`
+- `created_at_from`, `created_at_to`
+- `sort_by` (`employee_code`, `full_name`, `join_date`, `active_status`, `created_at`)
+- `sort_direction` (`asc`, `desc`)
 
 #### Sub-Resource Karyawan
 
@@ -852,6 +873,7 @@ karyawan.branches.index / create / store / show / edit / update / destroy
 karyawan.departments.index / create / store / show / edit / update / destroy
 karyawan.positions.index / create / store / show / edit / update / destroy
 karyawan.employees.index / create / store / show / edit / update / destroy
+karyawan.employees.export                    (GET)
 
 karyawan.employees.status                    (PATCH)
 karyawan.employees.user.store                (POST)
