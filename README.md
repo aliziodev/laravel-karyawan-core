@@ -6,6 +6,8 @@ Package Laravel siap produksi yang menyediakan fondasi lengkap manajemen data ka
 
 [![PHP Version](https://img.shields.io/badge/php-%5E8.2-blue)](https://www.php.net/)
 [![Laravel](https://img.shields.io/badge/laravel-%5E11.0%7C%5E12.0-red)](https://laravel.com)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/aliziodev/laravel-karyawan-core.svg)](https://packagist.org/packages/aliziodev/laravel-karyawan-core)
+[![Total Downloads](https://img.shields.io/packagist/dt/aliziodev/laravel-karyawan-core.svg)](https://packagist.org/packages/aliziodev/laravel-karyawan-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
