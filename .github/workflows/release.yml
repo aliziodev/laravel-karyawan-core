@@ -4,6 +4,13 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -11,7 +18,11 @@ permissions:
   pull-requests: write
 
 jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
   release:
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
@@ -20,25 +31,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
-
-      - name: Validate composer.json
-        run: composer validate --strict
-
-      - name: Run tests
-        run: composer test
 
       - name: Bootstrap initial tag v1.0.0
         id: bootstrap
