@@ -1,6 +1,7 @@
 <?php
 
 use Aliziodev\LaravelKaryawanCore\Models\Employee;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 it('GET /api/karyawan/employees returns paginated employees', function () {
     Employee::factory()->count(3)->create();
@@ -75,4 +76,64 @@ it('GET /api/karyawan/employees supports active_only filter', function () {
 
     $response->assertOk();
     $response->assertJsonCount(1, 'data');
+});
+
+it('GET /api/karyawan/employees/export returns downloadable xlsx', function () {
+    Employee::factory()->create(['full_name' => 'Alizio']);
+
+    $response = $this->get('/api/karyawan/employees/export');
+
+    $response->assertOk();
+    $response->assertDownload();
+    $response->assertHeader('content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+});
+
+it('GET /api/karyawan/employees/export supports filters by status and join date', function () {
+    Employee::factory()->create([
+        'full_name' => 'Filter Cocok',
+        'active_status' => 'active',
+        'join_date' => '2026-01-15',
+    ]);
+
+    Employee::factory()->create([
+        'full_name' => 'Status Tidak Cocok',
+        'active_status' => 'inactive',
+        'join_date' => '2026-01-15',
+    ]);
+
+    Employee::factory()->create([
+        'full_name' => 'Tanggal Tidak Cocok',
+        'active_status' => 'active',
+        'join_date' => '2024-01-01',
+    ]);
+
+    $response = $this->get('/api/karyawan/employees/export?active_status=active&join_date_from=2026-01-01&join_date_to=2026-12-31');
+
+    $response->assertOk();
+    $response->assertDownload();
+
+    $file = $response->baseResponse->getFile()->getPathname();
+    $sheet = IOFactory::load($file)->getActiveSheet();
+
+    expect($sheet->getCell('A2')->getValue())->toBeString();
+    expect($sheet->getCell('B2')->getValue())->toBe('Filter Cocok');
+    expect($sheet->getCell('B3')->getValue())->toBeNull();
+});
+
+it('GET /api/karyawan/employees/export returns english validation message for invalid status', function () {
+    app()->setLocale('en');
+
+    $response = $this->getJson('/api/karyawan/employees/export?active_status=status-invalid');
+
+    $response->assertStatus(422);
+    $response->assertJsonPath('errors.active_status.0', 'The selected active status is invalid.');
+});
+
+it('GET /api/karyawan/employees/export returns indonesian validation message for invalid company id', function () {
+    app()->setLocale('id');
+
+    $response = $this->getJson('/api/karyawan/employees/export?company_id=abc');
+
+    $response->assertStatus(422);
+    $response->assertJsonPath('errors.company_id.0', 'Kolom id perusahaan harus berupa angka.');
 });
