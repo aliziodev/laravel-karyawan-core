@@ -39,8 +39,11 @@ jobs:
       - name: Validate composer.json
         run: composer validate --strict
 
-      - name: Install dependencies for Laravel ${{ matrix.laravel }}
-        run: composer update --no-interaction --prefer-dist --with-all-dependencies "orchestra/testbench:${{ matrix.testbench }}"
+      - name: Pin Testbench for Laravel ${{ matrix.laravel }}
+        run: composer require --dev --no-interaction --no-update "orchestra/testbench:${{ matrix.testbench }}"
+
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist --with-all-dependencies
 
       - name: Pint check
         run: vendor/bin/pint --test
