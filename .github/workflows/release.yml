@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Run tests
+        run: composer test
+
+      - name: Bootstrap initial tag v1.0.0
+        id: bootstrap
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_COUNT=$(git tag --list 'v[0-9]*.[0-9]*.[0-9]*' | wc -l)
+
+          if [ "$TAG_COUNT" -eq 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            git tag -a v1.0.0 -m "Release v1.0.0"
+            git push origin v1.0.0
+
+            gh release create v1.0.0 --title "v1.0.0" --notes "Initial release baseline."
+
+            echo "bootstrapped=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "bootstrapped=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Semantic release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            conventional-changelog-conventionalcommits
+            @semantic-release/changelog
+            @semantic-release/git
+            @semantic-release/github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
