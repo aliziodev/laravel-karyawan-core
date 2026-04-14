@@ -2,6 +2,7 @@
 
 namespace Aliziodev\LaravelKaryawanCore\Database\Seeders;
 
+use Aliziodev\LaravelKaryawanCore\Contracts\EmployeeCodeGeneratorContract;
 use Aliziodev\LaravelKaryawanCore\Models\Branch;
 use Aliziodev\LaravelKaryawanCore\Models\Company;
 use Aliziodev\LaravelKaryawanCore\Models\Department;
@@ -13,6 +14,9 @@ class KaryawanDatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        /** @var EmployeeCodeGeneratorContract $codeGenerator */
+        $codeGenerator = app(EmployeeCodeGeneratorContract::class);
+
         $company = Company::factory()->create([
             'code' => 'MAIN',
             'name' => 'PT Contoh Indonesia',
@@ -54,27 +58,33 @@ class KaryawanDatabaseSeeder extends Seeder
             'branch_id' => $hq->id,
             'department_id' => $hrDept->id,
             'position_id' => $managerPos->id,
-            'employee_code' => 'EMP00001',
+            'employee_code' => $codeGenerator->generate(),
             'full_name' => 'Agus Prasetyo',
             'work_email' => 'agus.prasetyo@company.com',
         ]);
 
         // HR Staff under HR Manager
-        Employee::factory()->count(3)->create([
-            'company_id' => $company->id,
-            'branch_id' => $hq->id,
-            'department_id' => $hrDept->id,
-            'position_id' => $staffPos->id,
-            'manager_employee_id' => $hrManager->id,
-        ]);
+        foreach (range(1, 3) as $_) {
+            Employee::factory()->create([
+                'company_id' => $company->id,
+                'branch_id' => $hq->id,
+                'department_id' => $hrDept->id,
+                'position_id' => $staffPos->id,
+                'manager_employee_id' => $hrManager->id,
+                'employee_code' => $codeGenerator->generate(),
+            ]);
+        }
 
         // IT Staff
-        Employee::factory()->count(5)->create([
-            'company_id' => $company->id,
-            'branch_id' => $hq->id,
-            'department_id' => $itDept->id,
-            'position_id' => $staffPos->id,
-        ]);
+        foreach (range(1, 5) as $_) {
+            Employee::factory()->create([
+                'company_id' => $company->id,
+                'branch_id' => $hq->id,
+                'department_id' => $itDept->id,
+                'position_id' => $staffPos->id,
+                'employee_code' => $codeGenerator->generate(),
+            ]);
+        }
 
         $this->command?->info('Karyawan demo data berhasil dibuat.');
     }

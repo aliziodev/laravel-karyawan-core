@@ -19,6 +19,12 @@ class EmployeeFactory extends Factory
     {
         $gender = $this->faker->randomElement(Gender::cases());
         $joinDate = $this->faker->dateTimeBetween('-5 years', '-1 month');
+        $prefix = (string) config('karyawan.employee_code.prefix', 'EMP');
+        $padLength = (int) config('karyawan.employee_code.pad_length', 5);
+
+        $maxNumber = (10 ** max($padLength, 1)) - 1;
+        $randomNumber = (string) $this->faker->unique()->numberBetween(1, $maxNumber);
+        $employeeCode = strtoupper($prefix).str_pad($randomNumber, $padLength, '0', STR_PAD_LEFT);
 
         return [
             'user_id' => null,
@@ -27,7 +33,7 @@ class EmployeeFactory extends Factory
             'department_id' => null,
             'position_id' => null,
             'manager_employee_id' => null,
-            'employee_code' => strtoupper($this->faker->unique()->bothify('EMP-#####')),
+            'employee_code' => $employeeCode,
             'full_name' => $this->faker->name($gender === Gender::Male ? 'male' : 'female'),
             'nick_name' => $this->faker->firstName(),
             'work_email' => $this->faker->unique()->safeEmail(),
