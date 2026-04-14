@@ -21,4 +21,25 @@ class StoreEmergencyContactRequest extends FormRequest
             'is_primary' => ['nullable', 'boolean'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            '*.required' => __('karyawan::validation.common.required'),
+            '*.string' => __('karyawan::validation.common.string'),
+            '*.boolean' => __('karyawan::validation.common.boolean'),
+            '*.max' => __('karyawan::validation.common.max'),
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => __('karyawan::validation.attributes.name'),
+            'relationship' => __('karyawan::validation.attributes.relationship'),
+            'phone' => __('karyawan::validation.attributes.phone'),
+            'address' => __('karyawan::validation.attributes.address'),
+            'is_primary' => __('karyawan::validation.attributes.is_primary'),
+        ];
+    }
 }

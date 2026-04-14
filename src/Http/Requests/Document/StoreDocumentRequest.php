@@ -38,6 +38,43 @@ class StoreDocumentRequest extends FormRequest
         ];
     }
 
+    public function messages(): array
+    {
+        return [
+            '*.required' => __('karyawan::validation.common.required'),
+            '*.required_without' => __('karyawan::validation.common.required_without'),
+            '*.string' => __('karyawan::validation.common.string'),
+            '*.array' => __('karyawan::validation.common.array'),
+            '*.file' => __('karyawan::validation.common.file'),
+            '*.date' => __('karyawan::validation.common.date'),
+            '*.after_or_equal' => __('karyawan::validation.common.after_or_equal'),
+            '*.enum' => __('karyawan::validation.common.enum'),
+            'name.max' => __('karyawan::validation.common.max'),
+            'document_number.max' => __('karyawan::validation.common.max'),
+            'file_disk.max' => __('karyawan::validation.common.max'),
+            'file_name.max' => __('karyawan::validation.common.max'),
+            'notes.max' => __('karyawan::validation.common.max'),
+            'file.max' => __('karyawan::validation.common.max_file'),
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'type' => __('karyawan::validation.attributes.type'),
+            'name' => __('karyawan::validation.attributes.name'),
+            'document_number' => __('karyawan::validation.attributes.document_number'),
+            'issued_at' => __('karyawan::validation.attributes.issued_at'),
+            'expired_at' => __('karyawan::validation.attributes.expired_at'),
+            'file' => __('karyawan::validation.attributes.file'),
+            'file_disk' => __('karyawan::validation.attributes.file_disk'),
+            'file_path' => __('karyawan::validation.attributes.file_path'),
+            'file_name' => __('karyawan::validation.attributes.file_name'),
+            'notes' => __('karyawan::validation.attributes.notes'),
+            'metadata' => __('karyawan::validation.attributes.metadata'),
+        ];
+    }
+
     /**
      * Konversi request ke EmployeeDocumentData.
      * Logika pemilihan file-upload vs metadata-only ada di sini (HTTP layer),
