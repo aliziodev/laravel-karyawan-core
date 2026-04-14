@@ -1,71 +1,72 @@
 {
-    "name": "aliziodev/laravel-karyawan-core",
-    "description": "Fondasi data karyawan reusable untuk aplikasi bisnis Laravel Indonesia",
-    "type": "library",
-    "keywords": [
-        "laravel",
-        "employee",
-        "karyawan",
-        "hr",
-        "indonesia",
-        "core"
-    ],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Aliziodev",
-            "email": "aliziodev@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^8.2|^8.3|^8.4",
-        "illuminate/auth": "^11.0|^12.0|^13.0",
-        "illuminate/database": "^11.0|^12.0|^13.0",
-        "illuminate/events": "^11.0|^12.0|^13.0",
-        "illuminate/http": "^11.0|^12.0|^13.0",
-        "illuminate/support": "^11.0|^12.0|^13.0",
-        "illuminate/validation": "^11.0|^12.0|^13.0"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.0",
-        "orchestra/testbench": "^9.0|^10.0|^11.0",
-        "pestphp/pest": "^3.0|^4.0",
-        "pestphp/pest-plugin-laravel": "^3.0|^4.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Aliziodev\\LaravelKaryawanCore\\": "src/",
-            "Aliziodev\\LaravelKaryawanCore\\Database\\Factories\\": "database/factories/",
-            "Aliziodev\\LaravelKaryawanCore\\Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Aliziodev\\LaravelKaryawanCore\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Aliziodev\\LaravelKaryawanCore\\Providers\\KaryawanServiceProvider"
-            ],
-            "aliases": {
-                "Karyawan": "Aliziodev\\LaravelKaryawanCore\\Facades\\Karyawan"
-            }
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/pest",
-        "test:coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
-    },
-    "config": {
-        "sort-packages": true,
-        "preferred-install": "dist",
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+  "name": "aliziodev/laravel-karyawan-core",
+  "description": "Fondasi data karyawan reusable untuk aplikasi bisnis Laravel Indonesia",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "employee",
+    "karyawan",
+    "hr",
+    "indonesia",
+    "core"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Aliziodev",
+      "email": "aliziodev@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.2|^8.3|^8.4",
+    "illuminate/auth": "^11.0|^12.0|^13.0",
+    "illuminate/database": "^11.0|^12.0|^13.0",
+    "illuminate/events": "^11.0|^12.0|^13.0",
+    "illuminate/http": "^11.0|^12.0|^13.0",
+    "illuminate/support": "^11.0|^12.0|^13.0",
+    "illuminate/validation": "^11.0|^12.0|^13.0",
+    "phpoffice/phpspreadsheet": "^5.0"
+  },
+  "require-dev": {
+    "laravel/pint": "^1.0",
+    "orchestra/testbench": "^9.0|^10.0|^11.0",
+    "pestphp/pest": "^3.0|^4.0",
+    "pestphp/pest-plugin-laravel": "^3.0|^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Aliziodev\\LaravelKaryawanCore\\": "src/",
+      "Aliziodev\\LaravelKaryawanCore\\Database\\Factories\\": "database/factories/",
+      "Aliziodev\\LaravelKaryawanCore\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Aliziodev\\LaravelKaryawanCore\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Aliziodev\\LaravelKaryawanCore\\Providers\\KaryawanServiceProvider"
+      ],
+      "aliases": {
+        "Karyawan": "Aliziodev\\LaravelKaryawanCore\\Facades\\Karyawan"
+      }
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest",
+    "test:coverage": "vendor/bin/pest --coverage",
+    "format": "vendor/bin/pint"
+  },
+  "config": {
+    "sort-packages": true,
+    "preferred-install": "dist",
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
